@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <!-- index.html: Home page: introduction, the two main options, what we offer and the booking discounts.
-     Plain HTML only: no CSS (styling) and no JavaScript, so everything shows top to bottom in the order it is written. -->
+     Styled by css/styles.css and made interactive by javascript/main.js, both linked in the head (IIE, 2026).
+     Built with standard HTML elements (Mozilla, n.d.a); the drop-down menus use the HTML details element (Mozilla, n.d.b). -->
 <html lang="en">
 <head>
     <!-- meta charset lets the page show characters such as the rand amounts and dashes correctly -->
     <meta charset="UTF-8">
-    <!-- meta viewport makes the page fit the width of a phone screen -->
+    <!-- meta viewport makes the page fit the width of a phone screen (W3Schools, 2023; contributed by ST10538810) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Home page: introduction, the two main options, what we offer and the booking discounts.">
-    <title>Home | Next Level Gaming &amp; Esports Arena</title>
+    <title>Home | LvL UP</title>
+    <!-- the small icon shown on the browser tab -->
+    <link rel="icon" type="image/png" href="images/logo-emblem.png">
+    <!-- Fonts: Orbitron, Rajdhani and Poppins from Google Fonts (Google Fonts, n.d.a; Google Fonts, n.d.b; Google Fonts, n.d.c),
+         loaded with a <link> in the head as the module manual describes (IIE, 2026) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@400;500;600&amp;family=Rajdhani:wght@500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- External style sheet and JavaScript file (IIE, 2026). defer = the script runs after the page has loaded. -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="javascript/main.js" defer></script>
 </head>
 <body>
 
@@ -16,17 +25,21 @@
     <header>
         <a href="index.html">
             <!-- width and height are HTML attributes (not CSS); they stop the page jumping while the image loads -->
-            <img src="images/logo.png" alt="LvL UP - Next Level Gaming and Esports Arena logo" width="200" height="96">
+            <img src="images/logo-emblem.png" alt="LvL UP Gaming and Esports Arena logo" width="58" height="56">
         </a>
-        <p><strong>NEXT LEVEL GAMING &amp; ESPORTS ARENA</strong></p>
 
-        <!-- NAVIGATION BAR: links to every page. Gaming Pkgs and Experiences are drop-downs. -->
-        <nav aria-label="Main menu">
+        <!-- MENU BUTTON: only shown on phones and tablets. toggleMenu() in javascript/main.js opens and closes the menu. -->
+        <button type="button" class="nav-toggle" id="menuButton" aria-expanded="false" aria-controls="menu" onclick="toggleMenu()">Menu</button>
+
+        <!-- NAVIGATION BAR: links to every page. Gaming Pkgs and Experiences are drop-downs.
+             The same menu is on every page and the page you are on is highlighted, so visitors always know where they are
+             (Krug, 2014; Nielsen, 2024: heuristic "Consistency and standards"; contributed by ST10538810). -->
+        <nav aria-label="Main menu" id="menu">
             <ul>
             <li><strong><a href="index.html" aria-current="page">Home</a></strong></li>
             <li><a href="about.html">About Us</a></li>
             <li>
-                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list -->
+                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list (Mozilla, n.d.b) -->
                 <details>
                     <summary>Gaming Pkgs</summary>
                     <ul>
@@ -39,7 +52,7 @@
                 </details>
             </li>
             <li>
-                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list -->
+                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list (Mozilla, n.d.b) -->
                 <details>
                     <summary>Experiences</summary>
                     <ul>
@@ -59,63 +72,221 @@
     <hr>
 
     <!-- MAIN CONTENT of this page -->
+    <!-- HERO BANNER: one photograph (Krukau, 2021b). The LvL UP logo sits in the top right corner and glows (the glow is made in styles.css). -->
+    <div class="hero-banner">
+        <img class="hero-image" src="images/photos/hero-arena.jpg" alt="Neon-lit rows of gaming computers and red gaming chairs in a dark arena">
+        <img class="hero-logo" src="images/logo-transparent.png" alt="LvL UP logo" width="497" height="210">
+        <div class="hero-content">
+            <!-- the page heading is kept for screen readers and search engines; the logo in the top right corner is what visitors see -->
+            <h1 class="visually-hidden">LvL UP Gaming &amp; Esports Arena</h1>
+            <p class="eyebrow">Play &middot; Compete &middot; Socialise</p>
+            <p class="lead">Gaming and esports for everyone, from casual players to competitive teams.</p>
+            <p class="cta">
+                <a class="btn" href="gaming-packages.html">Explore packages</a>
+                <a class="btn btn-ghost" href="calculate-fees.html">Get a quote</a>
+            </p>
+        </div>
+    </div>
+    <!-- MAIN CONTENT of this page -->
     <main>
 
-        <!-- HERO: the main heading and the two big options -->
+        <!-- GAMING PACKAGES: four image cards -->
         <section>
-            <h1>Next Level Gaming &amp; Esports Arena</h1>
-            <p><strong>Johannesburg, South Africa</strong></p>
-            <p>Johannesburg's premier gaming and esports venue. Play. Compete. Socialise. Open to casual players,
-            competitive gamers, families, schools and corporate teams, with high-performance gaming equipment,
-            console lounges, immersive virtual reality and racing simulators.</p>
-            <p>
-                <a href="gaming-packages.html"><strong>GAMING PACKAGES</strong></a> |
-                <a href="individual-experiences.html"><strong>INDIVIDUAL EXPERIENCES</strong></a>
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Gaming packages</p>
+                    <h2>Pick your day out</h2>
+                </div>
+                <a class="more" href="gaming-packages.html">View all packages &rarr;</a>
+            </div>
+            <div class="card-grid">
+                <article>
+                    <!-- Photograph: (Demir, 2025a) -->
+                    <img class="photo" src="images/photos/rgb-desk-setup.jpg" alt="Gaming PC with glowing orange fans beside a monitor, keyboard and speakers in a dark room">
+                    <div class="card-body">
+                        <p class="price">R1,500</p>
+                        <h3><a href="ultimate-gamer-pass.html">Ultimate Gamer Pass</a></h3>
+                        <p>A full day of unlimited gaming, with PC and console gaming, high-speed internet, a snack voucher and tournament entry.</p>
+                        <a class="more" href="ultimate-gamer-pass.html">View details &rarr;</a>
+                    </div>
+                </article>
+                <article>
+                    <!-- Photograph: (Demir, 2025b) -->
+                    <img class="photo" src="images/photos/arena-rgb-setup.jpg" alt="Dark gaming desk with a monitor, mechanical keyboard and a PC glowing orange behind glass">
+                    <div class="card-body">
+                        <p class="price">R1,500</p>
+                        <h3><a href="vip-gaming-experience.html">VIP Gaming Experience</a></h3>
+                        <p>A premium gaming day with a private booth, premium equipment, food and drinks, priority booking and a personal gaming assistant.</p>
+                        <a class="more" href="vip-gaming-experience.html">View details &rarr;</a>
+                    </div>
+                </article>
+                <article>
+                    <!-- Photograph: (Krukau, 2021a) -->
+                    <img class="photo" src="images/photos/esports-players-computers.jpg" alt="Gamers in headsets playing at a row of computers behind a lit GAME TIME sign">
+                    <div class="card-body">
+                        <p class="price">R1,500</p>
+                        <h3><a href="esports-training-package.html">Esports Training Package</a></h3>
+                        <p>Sharpen your competitive game with professional coaching, team communication, match analysis, practice sessions and feedback.</p>
+                        <a class="more" href="esports-training-package.html">View details &rarr;</a>
+                    </div>
+                </article>
+                <article>
+                    <!-- Photograph: (Lewis, 2018) -->
+                    <img class="photo" src="images/photos/kids-playing-video-games.jpg" alt="Two children on a sofa playing a video game with controllers">
+                    <div class="card-body">
+                        <p class="price">R1,500</p>
+                        <h3><a href="birthday-party-package.html">Birthday Party Package</a></h3>
+                        <p>A gaming-themed birthday with a reserved gaming area, multiplayer competitions, party decorations, catering and tournament prizes.</p>
+                        <a class="more" href="birthday-party-package.html">View details &rarr;</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- INDIVIDUAL EXPERIENCES: three image cards -->
+        <section>
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Individual experiences</p>
+                    <h2>Or try something different</h2>
+                </div>
+                <a class="more" href="individual-experiences.html">View all experiences &rarr;</a>
+            </div>
+            <div class="card-grid cols-3">
+                <article>
+                    <!-- Photograph: (SHVETS production, 2021) -->
+                    <img class="photo" src="images/photos/vr-neon-room.jpg" alt="Player in a VR headset standing in a room lit by white neon strips">
+                    <div class="card-body">
+                        <p class="price">R750</p>
+                        <h3><a href="virtual-reality-experience.html">Virtual Reality Experience</a></h3>
+                        <p>Step into immersive virtual reality games with a VR headset, a choice of games and staff on hand to help.</p>
+                        <a class="more" href="virtual-reality-experience.html">View details &rarr;</a>
+                    </div>
+                </article>
+                <article>
+                    <!-- Photograph: (cottonbro studio, 2020) -->
+                    <img class="photo" src="images/photos/racing-arcade-driver.jpg" alt="Driver at an arcade racing simulator with a neon-lit dashboard and a racing game on the screen">
+                    <div class="card-body">
+                        <p class="price">R750</p>
+                        <h3><a href="racing-simulator-challenge.html">Racing Simulator Challenge</a></h3>
+                        <p>Take on the track on a professional driving simulator. Pick your track and chase the top spot on the leaderboard.</p>
+                        <a class="more" href="racing-simulator-challenge.html">View details &rarr;</a>
+                    </div>
+                </article>
+                <article>
+                    <!-- Photograph: (Akeri, 2024) -->
+                    <img class="photo" src="images/photos/escape-room-puzzle.jpg" alt="Two men solving mechanical puzzles next to a large countdown timer">
+                    <div class="card-body">
+                        <p class="price">R750</p>
+                        <h3><a href="escape-room-challenge.html">Escape Room Challenge</a></h3>
+                        <p>Work as a team to solve the puzzles and escape before time runs out. Comes with a themed room and a digital scorecard.</p>
+                        <a class="more" href="escape-room-challenge.html">View details &rarr;</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- BOOKING DISCOUNTS: the more you book, the more you save -->
+        <section class="panel discount-strip">
+            <div>
+                <p class="eyebrow">Book more, save more</p>
+                <h2>Your discount grows with every booking</h2>
+                <p>15% VAT is added to every total.</p>
+                <p class="cta"><a class="btn" href="calculate-fees.html">Get a quote</a></p>
+            </div>
+            <ul class="tiers">
+                <li><strong>0%</strong><span>1 booking</span></li>
+                <li><strong>5%</strong><span>2 bookings</span></li>
+                <li><strong>10%</strong><span>3 bookings</span></li>
+                <li><strong>15%</strong><span>4 or more</span></li>
+            </ul>
+        </section>
+
+        <!-- EVENTS WE HOST: a slim strip -->
+        <section>
+            <div class="host-strip">
+                <h2>We host</h2>
+                <ul class="pills">
+                    <li>Tournaments</li>
+                    <li>Birthdays</li>
+                    <li>School outings</li>
+                    <li>Corporate team-building</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CLIENT REVIEWS: three review cards (stars are text characters). These are sample reviews written for this project. -->
+        <section id="reviews">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Reviews</p>
+                    <h2>What our clients say</h2>
+                </div>
+            </div>
+            <div class="review-grid">
+                <div class="review">
+                    <p class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <blockquote>The kids had a blast. The reserved area, the competitions and the prizes kept everyone busy for hours, and we did not have to organise a thing.</blockquote>
+                    <div class="who"><span class="avatar">T</span><div><strong>Thandi M.</strong><small>Birthday Party Package</small></div></div>
+                </div>
+                <div class="review">
+                    <p class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <blockquote>We booked the Escape Room Challenge and the Racing Simulator for our team. It got everyone talking, and the quote was clear from the start.</blockquote>
+                    <div class="who"><span class="avatar">S</span><div><strong>Sipho K.</strong><small>Corporate team-building</small></div></div>
+                </div>
+                <div class="review">
+                    <p class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <blockquote>The coaching and match analysis helped our squad improve before our next tournament. Booking three items gave us a proper discount too.</blockquote>
+                    <div class="who"><span class="avatar">A</span><div><strong>Aaliyah P.</strong><small>Esports Training Package</small></div></div>
+                </div>
+            </div>
+            <p class="sample-note">Sample reviews written for this student project. LvL UP is a fictional venue.</p>
+        </section>
+
+        <!-- FAQ: each question is a <details> element that opens to show the answer (Mozilla, n.d.b) -->
+        <section id="faq">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">FAQ</p>
+                    <h2>Good to know</h2>
+                </div>
+            </div>
+            <div class="faq-list">
+                <details>
+                    <summary>How much do the packages and experiences cost?</summary>
+                    <p>Every gaming package is R1,500 and every individual experience is R750. 15% VAT is added to every total.</p>
+                </details>
+                <details>
+                    <summary>Do you offer a discount if I book more than one thing?</summary>
+                    <p>Yes. Book 2 items and get 5% off the total, 3 items for 10% off and 4 or more for 15% off. The discount is taken off first and the VAT is added after.</p>
+                </details>
+                <details>
+                    <summary>How do I book, and when do I find out the final price?</summary>
+                    <p>Go to <a href="calculate-fees.html">Calculate Fees</a>, tick what you want and fill in your contact details, event type, date and address. Your quoted total shows straight away. A consultant then contacts you to confirm the booking and the total. The quote is not a formal invoice.</p>
+                </details>
+                <details>
+                    <summary>Do I have to travel to a venue?</summary>
+                    <p>Not at all. LvL UP is based at Emeris Pretoria in Lynnwood, and we bring the arena to you. You choose the event address and the date when you book.</p>
+                </details>
+                <details>
+                    <summary>What is included in the Ultimate Gamer Pass?</summary>
+                    <p>A full day of unlimited gaming with PC gaming, console gaming, high-speed internet, a snack voucher and tournament entry.</p>
+                </details>
+                <details>
+                    <summary>Can you host birthdays, school outings or corporate events?</summary>
+                    <p>Yes. The Birthday Party Package includes a reserved area, multiplayer competitions, decorations, catering and tournament prizes. We also host school outings and corporate team-building, and the Escape Room and Racing Simulator challenges work well for teams.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- CLOSING CALL TO ACTION -->
+        <section class="closing">
+            <h2>Ready to play?</h2>
+            <p>Choose your packages and experiences and we will work out your quote, with your discount and VAT included.</p>
+            <p class="cta">
+                <a class="btn" href="calculate-fees.html">Calculate total fees</a>
+                <a class="btn btn-ghost" href="contact.html">Contact us</a>
             </p>
-            <p>[Image: arena hero atmosphere - high-performance PC rigs with RGB lighting]</p>
-        </section>
-
-        <!-- WHAT WE OFFER: four options, each a link to its page -->
-        <section>
-            <h2>What We Offer</h2>
-            <ul>
-                <li>[Icon] <a href="gaming-packages.html"><strong>Gaming Packages</strong></a> - 4 packages &middot; from R1,500</li>
-                <li>[Icon] <a href="individual-experiences.html"><strong>Individual Experiences</strong></a> - 3 experiences &middot; from R750</li>
-                <li>[Icon] <a href="calculate-fees.html"><strong>Calculate Fees</strong></a> - get a quoted total</li>
-                <li>[Icon] <a href="contact.html"><strong>Contact Us</strong></a> - we bring the arena to you</li>
-            </ul>
-        </section>
-
-        <!-- WE HOST: the kinds of events -->
-        <section>
-            <h2>We Host</h2>
-            <ul>
-                <li>Tournaments</li>
-                <li>Birthdays</li>
-                <li>School outings</li>
-                <li>Corporate team-building</li>
-            </ul>
-        </section>
-
-        <!-- BOOKING DISCOUNTS: a table (the brief asks for a table somewhere on the site) -->
-        <section>
-            <h2>Booking Discounts Available</h2>
-            <table>
-                <caption>Multi-booking discounts (15% VAT is added to every total)</caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Bookings Count</th>
-                        <th scope="col">Discount Rate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>1 Booking</td><td>No discount</td></tr>
-                    <tr><td>2 Bookings</td><td>5% off total</td></tr>
-                    <tr><td>3 Bookings</td><td>10% off total</td></tr>
-                    <tr><td>4+ Bookings</td><td>15% off total</td></tr>
-                </tbody>
-            </table>
-            <p>[Image: arena atmosphere - community tournaments and weekend matches]</p>
         </section>
 
     </main>
@@ -124,8 +295,8 @@
 
     <!-- FOOTER: the same on every page -->
     <footer>
-        <p><strong>NEXT LEVEL GAMING</strong><br>
-        Next Level Gaming &amp; Esports Arena &middot; Johannesburg &middot; Est. 2023.<br>
+        <p><strong>LvL UP</strong><br>
+        Gaming &amp; Esports Arena &middot; Pretoria &middot; Est. 2023.<br>
         Gauteng's premier tech-focused competitive event space.</p>
 
         <h2>Explore</h2>
@@ -133,6 +304,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="gaming-packages.html">Packages</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
         </ul>
 
         <h2>Services</h2>
@@ -145,20 +317,35 @@
         <h2>Get in Touch</h2>
         <ul>
             <!-- tel: and mailto: links open the phone dialler or the email program -->
-            <li><a href="tel:+27110000000">+27 11 000 0000</a></li>
+            <li><a href="tel:+27120000000">+27 12 000 0000</a></li>
             <li><a href="mailto:info@lvlup.co.za">info@lvlup.co.za</a></li>
-            <li>Johannesburg, South Africa</li>
+            <li>Pretoria, South Africa</li>
         </ul>
 
-        <p><small>&copy; 2026 Next Level Gaming &amp; Esports Arena. All rights reserved.</small></p>
+        <p><small>&copy; <span id="year">2026</span> LvL UP. All rights reserved. Photographs from Pexels.</small></p>
     </footer>
 
 </body>
 </html>
 
 <!-- References
-     Mozilla (n.d.) HTML elements reference - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element (Accessed: 29 September 2026).
-     Mozilla (n.d.) The Details disclosure element - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details (Accessed: 29 September 2026).
-     Mozilla (n.d.) Client-side form validation - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation (Accessed: 29 September 2026).
+     Akeri, A. (2024) Men Engaged in Puzzle Solving with Timer [Photograph]. Pexels. Available at: https://www.pexels.com/photo/men-engaged-in-puzzle-solving-with-timer-29483110/ (Accessed: 6 November 2026).
+     cottonbro studio (2020) Man Driving a Racing Car Machina [Photograph]. Pexels. Available at: https://www.pexels.com/photo/man-driving-a-racing-car-machina-5767676/ (Accessed: 6 November 2026).
+     Demir, A. (2025a) Modern Gaming Desk Setup with RGB Lighting [Photograph]. Pexels. Available at: https://www.pexels.com/photo/modern-gaming-desk-setup-with-rgb-lighting-30469973/ (Accessed: 6 November 2026).
+     Demir, A. (2025b) Modern Gaming Setup with RGB Lights in Dark Room [Photograph]. Pexels. Available at: https://www.pexels.com/photo/modern-gaming-setup-with-rgb-lights-in-dark-room-30469967/ (Accessed: 6 November 2026).
+     Google Fonts (n.d.a) Orbitron. Available at: https://fonts.google.com/specimen/Orbitron (Accessed: 6 November 2026).
+     Google Fonts (n.d.b) Rajdhani. Available at: https://fonts.google.com/specimen/Rajdhani (Accessed: 6 November 2026).
+     Google Fonts (n.d.c) Poppins. Available at: https://fonts.google.com/specimen/Poppins (Accessed: 6 November 2026).
      IIE (2026) XHAW5112 Module Manual, Scenario 3: Gaming &amp; Esports Arena (package and experience details, discounts, VAT).
+     The Independent Institute of Education (IIE) (2026) Web Development (Introduction) WEDE5020 Module Manual. Pretoria: IIE.
+     Krug, S. (2014) Don't make me think, revisited: a common sense approach to web usability. 3rd edn. Berkeley: New Riders. Source contributed by ST10538810.
+     Krukau, Y. (2021a) A People Playing Games using Computer [Photograph]. Pexels. Available at: https://www.pexels.com/photo/a-people-playing-games-using-computer-9072293/ (Accessed: 6 November 2026).
+     Krukau, Y. (2021b) Gaming Setup For Competitive Esports [Photograph]. Pexels. Available at: https://www.pexels.com/photo/gaming-setup-for-competitive-esports-9072394/ (Accessed: 6 November 2026).
+     Lewis, J. (2018) Kids Playing Video Games [Photograph]. Pexels. Available at: https://www.pexels.com/photo/kids-playing-video-games-1103563/ (Accessed: 6 November 2026).
+     Mozilla (n.d.a) HTML elements reference - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element (Accessed: 29 September 2026).
+     Mozilla (n.d.b) The Details disclosure element - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details (Accessed: 29 September 2026).
+     Mozilla (n.d.c) Client-side form validation - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation (Accessed: 29 September 2026).
+     Nielsen, J. (2024) 10 usability heuristics for user interface design. Nielsen Norman Group. Available at: https://www.nngroup.com/articles/ten-usability-heuristics/ (Accessed: 4 November 2026). Source contributed by ST10538810.
+     SHVETS production (2021) A Man with a Virtual Reality Headset Standing in a Dark Room [Photograph]. Pexels. Available at: https://www.pexels.com/photo/a-man-with-a-virtual-reality-headset-standing-in-a-dark-room-7562377/ (Accessed: 6 November 2026).
+     W3Schools (2023) HTML responsive web design. Available at: https://www.w3schools.com/html/html_responsive.asp (Accessed: 4 November 2026). Source contributed by ST10538810.
 -->
