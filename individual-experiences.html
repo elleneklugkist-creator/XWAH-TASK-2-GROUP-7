@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <!-- individual-experiences.html: Individual Experiences page: a list of all the individual experiences, each linking to its own page.
-     Plain HTML only: no CSS (styling) and no JavaScript, so everything shows top to bottom in the order it is written. -->
+     Styled by css/styles.css and made interactive by javascript/main.js, both linked in the head (IIE, 2026).
+     Built with standard HTML elements (Mozilla, n.d.a); the drop-down menus use the HTML details element (Mozilla, n.d.b). -->
 <html lang="en">
 <head>
     <!-- meta charset lets the page show characters such as the rand amounts and dashes correctly -->
     <meta charset="UTF-8">
-    <!-- meta viewport makes the page fit the width of a phone screen -->
+    <!-- meta viewport makes the page fit the width of a phone screen (W3Schools, 2023; contributed by ST10538810) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Individual Experiences page: a list of all the individual experiences, each linking to its own page.">
-    <title>Individual Experiences | Next Level Gaming &amp; Esports Arena</title>
+    <title>Individual Experiences | LvL UP</title>
+    <!-- the small icon shown on the browser tab -->
+    <link rel="icon" type="image/png" href="images/logo-emblem.png">
+    <!-- Fonts: Orbitron, Rajdhani and Poppins from Google Fonts (Google Fonts, n.d.a; Google Fonts, n.d.b; Google Fonts, n.d.c),
+         loaded with a <link> in the head as the module manual describes (IIE, 2026) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Poppins:wght@400;500;600&amp;family=Rajdhani:wght@500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- External style sheet and JavaScript file (IIE, 2026). defer = the script runs after the page has loaded. -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="javascript/main.js" defer></script>
 </head>
 <body>
 
@@ -16,17 +25,21 @@
     <header>
         <a href="index.html">
             <!-- width and height are HTML attributes (not CSS); they stop the page jumping while the image loads -->
-            <img src="images/logo.png" alt="LvL UP - Next Level Gaming and Esports Arena logo" width="200" height="96">
+            <img src="images/logo-emblem.png" alt="LvL UP Gaming and Esports Arena logo" width="58" height="56">
         </a>
-        <p><strong>NEXT LEVEL GAMING &amp; ESPORTS ARENA</strong></p>
 
-        <!-- NAVIGATION BAR: links to every page. Gaming Pkgs and Experiences are drop-downs. -->
-        <nav aria-label="Main menu">
+        <!-- MENU BUTTON: only shown on phones and tablets. toggleMenu() in javascript/main.js opens and closes the menu. -->
+        <button type="button" class="nav-toggle" id="menuButton" aria-expanded="false" aria-controls="menu" onclick="toggleMenu()">Menu</button>
+
+        <!-- NAVIGATION BAR: links to every page. Gaming Pkgs and Experiences are drop-downs.
+             The same menu is on every page and the page you are on is highlighted, so visitors always know where they are
+             (Krug, 2014; Nielsen, 2024: heuristic "Consistency and standards"; contributed by ST10538810). -->
+        <nav aria-label="Main menu" id="menu">
             <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li>
-                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list -->
+                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list (Mozilla, n.d.b) -->
                 <details>
                     <summary>Gaming Pkgs</summary>
                     <ul>
@@ -39,7 +52,7 @@
                 </details>
             </li>
             <li>
-                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list -->
+                <!-- <details> is a built-in HTML drop-down: click the <summary> to open or close the list (Mozilla, n.d.b) -->
                 <details>
                     <summary>Experiences</summary>
                     <ul>
@@ -60,50 +73,54 @@
 
     <!-- MAIN CONTENT of this page -->
     <main>
-        <!-- BREADCRUMB: shows where you are on the site -->
+        <!-- BREADCRUMB: shows where you are on the site (Krug, 2014; contributed by ST10538810) -->
         <p><a href="index.html">Home</a> &gt; <strong>Individual Experiences</strong></p>
 
         <h1>Individual Experiences</h1>
-        <p>Stand-alone experiences from R750. They can be combined with packages for multi-booking discounts.</p>
+        <p class="lead">Short on time, or want something different? Every experience costs R750, and you can add one to a package for a bigger discount.</p>
 
-        <!-- The list: one article per item -->
+        <!-- The list: one article per item. The heading of each is a link to its own page. -->
         <section>
-            <h2>All individual experiences</h2>
-
-            <!-- Virtual Reality Experience: the heading is a link to its own page -->
-            <article>
-                <p>[Image: experience image]</p>
-                <p><strong>R750</strong></p>
-                <h3><a href="virtual-reality-experience.html">Virtual Reality Experience</a></h3>
-                <p>A VR headset, a choice of immersive games and staff to help you.</p>
-                <p><a href="virtual-reality-experience.html">VIEW DETAILS &rarr;</a></p>
-            </article>
-
-            <!-- Racing Simulator Challenge: the heading is a link to its own page -->
-            <article>
-                <p>[Image: experience image]</p>
-                <p><strong>R750</strong></p>
-                <h3><a href="racing-simulator-challenge.html">Racing Simulator Challenge</a></h3>
-                <p>Professional driving simulators, a choice of tracks and a leaderboard.</p>
-                <p><a href="racing-simulator-challenge.html">VIEW DETAILS &rarr;</a></p>
-            </article>
-
-            <!-- Escape Room Challenge: the heading is a link to its own page -->
-            <article>
-                <p>[Image: experience image]</p>
-                <p><strong>R750</strong></p>
-                <h3><a href="escape-room-challenge.html">Escape Room Challenge</a></h3>
-                <p>A themed escape room team challenge with a digital scorecard.</p>
-                <p><a href="escape-room-challenge.html">VIEW DETAILS &rarr;</a></p>
-            </article>
-
+            <h2 class="visually-hidden">All individual experiences</h2>
+            <div class="feature-list">
+                <article>
+                    <!-- Photograph: (SHVETS production, 2021) -->
+                    <img class="photo" src="images/photos/vr-neon-room.jpg" alt="Player in a VR headset standing in a room lit by white neon strips">
+                    <div class="card-body">
+                        <p class="price">R750</p>
+                        <h3><a href="virtual-reality-experience.html">Virtual Reality Experience</a></h3>
+                        <p>Step into immersive virtual reality games with a VR headset, a choice of games and staff on hand to help.</p>
+                        <a class="more" href="virtual-reality-experience.html">View details &rarr;</a>
+                    </div>
+                </article>
+                <article>
+                    <!-- Photograph: (cottonbro studio, 2020) -->
+                    <img class="photo" src="images/photos/racing-arcade-driver.jpg" alt="Driver at an arcade racing simulator with a neon-lit dashboard and a racing game on the screen">
+                    <div class="card-body">
+                        <p class="price">R750</p>
+                        <h3><a href="racing-simulator-challenge.html">Racing Simulator Challenge</a></h3>
+                        <p>Take on the track on a professional driving simulator. Pick your track and chase the top spot on the leaderboard.</p>
+                        <a class="more" href="racing-simulator-challenge.html">View details &rarr;</a>
+                    </div>
+                </article>
+                <article>
+                    <!-- Photograph: (Akeri, 2024) -->
+                    <img class="photo" src="images/photos/escape-room-puzzle.jpg" alt="Two men solving mechanical puzzles next to a large countdown timer">
+                    <div class="card-body">
+                        <p class="price">R750</p>
+                        <h3><a href="escape-room-challenge.html">Escape Room Challenge</a></h3>
+                        <p>Work as a team to solve the puzzles and escape before time runs out. Comes with a themed room and a digital scorecard.</p>
+                        <a class="more" href="escape-room-challenge.html">View details &rarr;</a>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <!-- Discount reminder with a link to the fees page -->
-        <section>
-            <h2>Multi-Booking Discount &amp; VAT</h2>
-            <p>Discount: 2 bookings = 5% off &middot; 3 bookings = 10% off &middot; 4+ bookings = 15% off. 15% VAT is added to every total.</p>
-            <p><a href="calculate-fees.html"><strong>CALCULATE TOTAL FEES</strong></a></p>
+        <section class="panel">
+            <h2>Book more, save more</h2>
+            <p>Book 2 items and get 5% off the total, 3 items for 10% off and 4 or more for 15% off. 15% VAT is added to every total.</p>
+            <p class="cta"><a class="btn" href="calculate-fees.html">Calculate total fees</a></p>
         </section>
 
     </main>
@@ -112,8 +129,8 @@
 
     <!-- FOOTER: the same on every page -->
     <footer>
-        <p><strong>NEXT LEVEL GAMING</strong><br>
-        Next Level Gaming &amp; Esports Arena &middot; Johannesburg &middot; Est. 2023.<br>
+        <p><strong>LvL UP</strong><br>
+        Gaming &amp; Esports Arena &middot; Pretoria &middot; Est. 2023.<br>
         Gauteng's premier tech-focused competitive event space.</p>
 
         <h2>Explore</h2>
@@ -121,6 +138,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="gaming-packages.html">Packages</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
         </ul>
 
         <h2>Services</h2>
@@ -133,20 +151,30 @@
         <h2>Get in Touch</h2>
         <ul>
             <!-- tel: and mailto: links open the phone dialler or the email program -->
-            <li><a href="tel:+27110000000">+27 11 000 0000</a></li>
+            <li><a href="tel:+27120000000">+27 12 000 0000</a></li>
             <li><a href="mailto:info@lvlup.co.za">info@lvlup.co.za</a></li>
-            <li>Johannesburg, South Africa</li>
+            <li>Pretoria, South Africa</li>
         </ul>
 
-        <p><small>&copy; 2026 Next Level Gaming &amp; Esports Arena. All rights reserved.</small></p>
+        <p><small>&copy; <span id="year">2026</span> LvL UP. All rights reserved. Photographs from Pexels.</small></p>
     </footer>
 
 </body>
 </html>
 
 <!-- References
-     Mozilla (n.d.) HTML elements reference - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element (Accessed: 29 September 2026).
-     Mozilla (n.d.) The Details disclosure element - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details (Accessed: 29 September 2026).
-     Mozilla (n.d.) Client-side form validation - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation (Accessed: 29 September 2026).
+     Akeri, A. (2024) Men Engaged in Puzzle Solving with Timer [Photograph]. Pexels. Available at: https://www.pexels.com/photo/men-engaged-in-puzzle-solving-with-timer-29483110/ (Accessed: 6 November 2026).
+     cottonbro studio (2020) Man Driving a Racing Car Machina [Photograph]. Pexels. Available at: https://www.pexels.com/photo/man-driving-a-racing-car-machina-5767676/ (Accessed: 6 November 2026).
+     Google Fonts (n.d.a) Orbitron. Available at: https://fonts.google.com/specimen/Orbitron (Accessed: 6 November 2026).
+     Google Fonts (n.d.b) Rajdhani. Available at: https://fonts.google.com/specimen/Rajdhani (Accessed: 6 November 2026).
+     Google Fonts (n.d.c) Poppins. Available at: https://fonts.google.com/specimen/Poppins (Accessed: 6 November 2026).
      IIE (2026) XHAW5112 Module Manual, Scenario 3: Gaming &amp; Esports Arena (package and experience details, discounts, VAT).
+     The Independent Institute of Education (IIE) (2026) Web Development (Introduction) WEDE5020 Module Manual. Pretoria: IIE.
+     Krug, S. (2014) Don't make me think, revisited: a common sense approach to web usability. 3rd edn. Berkeley: New Riders. Source contributed by ST10538810.
+     Mozilla (n.d.a) HTML elements reference - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element (Accessed: 29 September 2026).
+     Mozilla (n.d.b) The Details disclosure element - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details (Accessed: 29 September 2026).
+     Mozilla (n.d.c) Client-side form validation - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation (Accessed: 29 September 2026).
+     Nielsen, J. (2024) 10 usability heuristics for user interface design. Nielsen Norman Group. Available at: https://www.nngroup.com/articles/ten-usability-heuristics/ (Accessed: 4 November 2026). Source contributed by ST10538810.
+     SHVETS production (2021) A Man with a Virtual Reality Headset Standing in a Dark Room [Photograph]. Pexels. Available at: https://www.pexels.com/photo/a-man-with-a-virtual-reality-headset-standing-in-a-dark-room-7562377/ (Accessed: 6 November 2026).
+     W3Schools (2023) HTML responsive web design. Available at: https://www.w3schools.com/html/html_responsive.asp (Accessed: 4 November 2026). Source contributed by ST10538810.
 -->
