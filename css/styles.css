@@ -1029,10 +1029,11 @@ textarea:focus {
 }
 
 /* checkboxes and radio buttons use the logo pink (Mozilla, n.d.a) */
+/* 1.5rem = 24px, the minimum target size for WCAG 2.2 criterion 2.5.8 (World Wide Web Consortium, 2023; contributed by ST10538810) */
 input[type="checkbox"],
 input[type="radio"] {
-    width: 1.3rem;
-    height: 1.3rem;
+    width: 1.5rem;
+    height: 1.5rem;
     margin-right: 0.5rem;
     accent-color: var(--pink);
     cursor: pointer;
