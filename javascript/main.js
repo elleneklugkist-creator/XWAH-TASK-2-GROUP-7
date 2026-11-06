@@ -73,6 +73,29 @@ function setUpMenus() {
 }
 
 
+/* ---------- 4b. CLOSE THE MENUS WITH THE ESCAPE KEY ----------
+   Keyboard users can press Escape to close an open drop-down or the phone menu, and the focus goes back to the Menu button.
+   The keydown event tells us which key was pressed (Mozilla, n.d.h). */
+function setUpEscapeKey() {
+    document.addEventListener("keydown", function (event) {
+        if (event.key != "Escape") { return; }
+
+        var dropdowns = document.querySelectorAll("nav details");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].removeAttribute("open");
+        }
+
+        var menu = document.getElementById("menu");
+        var button = document.getElementById("menuButton");
+        if (menu != null && button != null && menu.classList.contains("open")) {
+            toggleMenu();
+            button.focus();
+        }
+    });
+}
+
+
 /* ---------- 5. SHARED HELPERS FOR THE FORMS ----------
    Checking that a field is not empty, and the required and pattern rules used in the HTML forms, follow the
    W3Schools form validation page (W3Schools, n.d.; contributed by ST10538810).
@@ -418,6 +441,7 @@ function toggleMenu() {
 showYear();
 setUpReveal();
 setUpMenus();
+setUpEscapeKey();
 setUpLiveValidation("bookingForm");
 setUpLiveValidation("contactForm");
 tickItemFromAddress();
@@ -435,6 +459,7 @@ calculateTotal();
    Mozilla (n.d.e) Document: createElement() method - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement (Accessed: 5 November 2026).
    Mozilla (n.d.f) URLSearchParams - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams (Accessed: 5 November 2026).
    Mozilla (n.d.g) Element: setAttribute() method - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute (Accessed: 6 November 2026).
+   Mozilla (n.d.h) Element: keydown event - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Element/keydown_event (Accessed: 6 November 2026).
    Nielsen, J. (2024) 10 usability heuristics for user interface design. Nielsen Norman Group. Available at: https://www.nngroup.com/articles/ten-usability-heuristics/ (Accessed: 4 November 2026). Source contributed by ST10538810.
    W3Schools (n.d.) JavaScript form validation. Available at: https://www.w3schools.com/js/js_validation.asp (Accessed: 4 November 2026). Source contributed by ST10538810.
    ========================================================================== */
