@@ -1,0 +1,1494 @@
+/* ==========================================================================
+   styles.css: the one external style sheet for every page of the LvL UP website.
+   Linked in the <head> of each page, as taught in the module manual (IIE, 2026).
+
+   DESIGN SYSTEM
+   Colours come from the LvL UP logo palette, and each colour has one job:
+     pink   = main buttons and the current menu item
+     cyan   = links, small labels and highlights
+     gold   = prices only
+     purple = backgrounds and surfaces
+   Fonts: Orbitron (big display numbers), Rajdhani (headings, menu, buttons) and Poppins (body text).
+   Parts that go beyond the module manual carry an in-text citation, for example (Mozilla, n.d.c),
+   that matches the Referencing block at the bottom of this file.
+
+   RESEARCH APPLIED (research contributed by ST10538810)
+   - Each colour and each font has one clear job, like the colour roles and type roles of a design system (Google, n.d.; contributed by ST10538810).
+   - All spacing uses one scale in steps of 4px (0.25rem), so margins, padding and gaps are consistent on every page
+     (Nielsen, 2024: heuristic "Consistency and standards"; contributed by ST10538810).
+   - Text contrast is at least 4.5:1 (WCAG 2.2 criterion 1.4.3), links and buttons are at least 44px high on phones
+     (above the 24px minimum of criterion 2.5.8) and the keyboard focus outline is always visible (criterion 2.4.7)
+     (World Wide Web Consortium, 2023; contributed by ST10538810). The 44px size also follows Apple's touch-target guidance (Apple, n.d.; contributed by ST10538810).
+   - The layout is responsive: the viewport tag, media queries and scaling images follow W3Schools (2023; contributed by ST10538810).
+   ========================================================================== */
+
+
+/* ---------- 1. VARIABLES ----------
+   CSS variables are declared in :root so every colour and size is changed in one place (IIE, 2026) */
+:root {
+    --ink: #0a0610;            /* page background */
+    --surface: #15101f;        /* panels and cards */
+    --surface-2: #1d1629;      /* slightly lighter surface */
+    --line: rgba(255, 255, 255, 0.12);
+    --purple: #8b3f8f;
+    --pink: #d77ac7;
+    --cyan: #62d7e2;
+    --gold: #f0c84b;
+    --white: #ffffff;
+    --text: #ece6f5;
+    --muted: #b8aecb;
+    --radius: 14px;
+    --font-display: 'Orbitron', Arial, sans-serif;   /* (Google Fonts, n.d.a) */
+    --font-heading: 'Rajdhani', Arial, sans-serif;   /* (Google Fonts, n.d.b) */
+    --font-body: 'Poppins', Arial, sans-serif;       /* (Google Fonts, n.d.c) */
+}
+
+
+/* ---------- 2. RESET AND BASE ----------
+   Removes the browser's default margins and padding so every page starts the same (IIE, 2026) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+    background-color: var(--ink);
+    /* one soft purple glow at the top and one cyan glow at the side, as a page background (IIE, 2026) */
+    background-image:
+        radial-gradient(circle at 15% 0%, rgba(139, 63, 143, 0.35), transparent 45%),
+        radial-gradient(circle at 95% 25%, rgba(98, 215, 226, 0.08), transparent 40%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+::selection {
+    background: var(--pink);
+    color: var(--ink);
+}
+
+/* a clear outline for people who use the keyboard (Mozilla, n.d.f; World Wide Web Consortium, 2023, criterion 2.4.7; contributed by ST10538810) */
+:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+/* text that screen readers read but that is not shown (used for the home page heading) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+
+/* ---------- 3. TYPOGRAPHY ---------- */
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    line-height: 1.15;
+    color: var(--white);
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    max-width: 68ch;   /* keeps paragraphs a comfortable reading width */
+}
+
+ul, ol {
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+li {
+    margin-bottom: 0.25rem;
+}
+
+strong {
+    color: var(--white);
+}
+
+a {
+    color: var(--cyan);
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;   /* (Mozilla, n.d.k) */
+}
+
+a:hover {
+    color: var(--white);
+}
+
+small {
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+/* a small label above a heading */
+.eyebrow {
+    margin-bottom: 0.25rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+}
+
+.lead {
+    font-size: 1.15rem;
+    color: var(--text);
+}
+
+/* prices are always gold */
+.price {
+    margin-bottom: 0.25rem;
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+
+/* ---------- 4. HEADER AND NAVIGATION ----------
+   Logo on the left, menu on the right (flexbox: Mozilla, n.d.c), as in the wireframes.
+   position: sticky keeps the bar at the top while scrolling (IIE, 2026). */
+body > header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 2rem;
+    /* deep purple into teal, taken from the logo colours. The logo has a transparent background, so it blends in. */
+    background: linear-gradient(90deg, #2b1040 0%, #3a1745 50%, #0e3f4a 100%);
+}
+
+body > header img {
+    display: block;
+    height: 56px;
+    width: auto;
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav li {
+    position: relative;
+    margin: 0;
+}
+
+nav a,
+nav summary {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+nav strong {
+    font-weight: inherit;
+    color: inherit;
+}
+
+/* each top-level item has its own logo colour, shown as a bar under it (pink, cyan, gold, repeat) */
+nav > ul > li:nth-child(3n + 1) { --c: var(--pink); }
+nav > ul > li:nth-child(3n + 2) { --c: var(--cyan); }
+nav > ul > li:nth-child(3n + 3) { --c: var(--gold); }
+
+nav > ul > li::after {
+    content: "";
+    position: absolute;
+    left: 16%;
+    bottom: -2px;
+    width: 68%;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--c);
+    transform: scaleX(0.3);
+    transition: transform 0.25s ease;   /* (Mozilla, n.d.k; Mozilla, n.d.j) */
+}
+
+nav > ul > li:hover::after {
+    transform: scaleX(1);
+}
+
+nav a:hover,
+nav summary:hover,
+nav details[open] > summary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+/* the page you are on */
+nav a[aria-current="page"] {
+    background: #a9509f;
+    color: var(--white);
+}
+
+/* <details> drop-down menu (Mozilla, n.d.i). The browser's own triangle is hidden (vendor prefix: IIE, 2026) and replaced. */
+nav summary {
+    list-style: none;
+}
+
+nav summary::-webkit-details-marker {
+    display: none;
+}
+
+nav summary::after {
+    content: " \25BE";
+    color: var(--cyan);
+}
+
+nav details > ul {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    min-width: 270px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+}
+
+nav details > ul a {
+    border-radius: 10px;
+    font-size: 1.05rem;
+}
+
+/* the button that opens the menu on phones and tablets. Hidden on large screens. */
+.nav-toggle {
+    display: none;
+}
+
+hr {
+    display: none;   /* the pages use <hr> as plain-HTML dividers; the styled layout does not need them */
+}
+
+
+/* ---------- 5. PAGE LAYOUT ---------- */
+main {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+}
+
+/* breadcrumb: the first paragraph of the page */
+main > p:first-child {
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+main > p:first-child a {
+    display: inline-block;
+    padding: 0.25rem 0;
+    color: var(--cyan);
+}
+
+/* sections are open spaces on the page, not boxes. A box (.panel) is only used where it helps. */
+main > section {
+    margin: 3.5rem 0;
+}
+
+.panel {
+    padding: 1.5rem 1.75rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-head h2 {
+    margin-bottom: 0;
+}
+
+/* a plain text link with an arrow, used for "View all" and "View details" */
+.more {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.more:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------- 6. BUTTONS ----------
+   Pink = the main action. The outline button is the second choice. No glow, just a clear change on hover. */
+.btn,
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0.5rem 1.5rem;
+    border: 2px solid var(--pink);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    cursor: pointer;
+    color: #1a0720;
+    background: var(--pink);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn:hover,
+button:hover {
+    color: #1a0720;
+    background: #e6a0d9;
+    border-color: #e6a0d9;
+    transform: translateY(-2px);   /* (Mozilla, n.d.j) */
+}
+
+.btn:active,
+button:active {
+    transform: none;
+}
+
+/* the old .btn-gold class is kept in the HTML, but gold is only for prices, so it now looks like the main button */
+.btn-gold {
+    background: var(--pink);
+}
+
+.btn-ghost,
+button[type="reset"] {
+    color: var(--white);
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-ghost:hover,
+button[type="reset"]:hover {
+    color: var(--ink);
+    background: var(--white);
+    border-color: var(--white);
+}
+
+.cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+    max-width: none;
+}
+
+
+/* ---------- 7. HOME PAGE HERO ----------
+   One strong photograph with the logo already in it. The text sits on the left. */
+.hero-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 540px;
+    overflow: hidden;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* (Mozilla, n.d.g) */
+    object-position: 70% 50%;
+}
+
+/* a dark fade over the photo so the text is easy to read, and a fade into the page at the bottom */
+.hero-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background:
+        linear-gradient(90deg, rgba(10, 6, 16, 0.92) 0%, rgba(10, 6, 16, 0.55) 40%, rgba(10, 6, 16, 0) 75%),
+        linear-gradient(0deg, var(--ink) 0%, transparent 22%);
+}
+
+/* the logo sits in the top right corner of the photo. The glow is made with three drop-shadow filters:
+   a tight pink one, a wider pink one and a soft cyan one (Mozilla, n.d.e). */
+.hero-logo {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    z-index: 2;
+    width: 520px;
+    max-width: 42%;
+    height: auto;
+    filter: drop-shadow(0 0 8px rgba(215, 122, 199, 0.9)) drop-shadow(0 0 24px rgba(215, 122, 199, 0.55)) drop-shadow(0 0 56px rgba(98, 215, 226, 0.4));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.hero-content .lead {
+    max-width: 30ch;
+    font-size: 1.35rem;
+    font-family: var(--font-heading);
+    font-weight: 500;
+}
+
+
+/* ---------- 8. CARDS ----------
+   Packages are image cards in a grid (Mozilla, n.d.d). Experiences are wide rows (section 9). */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.card-grid.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+article:hover {
+    transform: translateY(-4px);   /* a small lift (Mozilla, n.d.j) */
+    border-color: rgba(98, 215, 226, 0.55);
+}
+
+.card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.card-body p {
+    font-size: 0.95rem;
+}
+
+.card-body .more {
+    margin-top: auto;
+}
+
+article h3 a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+article h3 a:hover {
+    color: var(--cyan);
+}
+
+
+/* ---------- 9. EXPERIENCE ROWS ----------
+   A different layout from the package cards: the photo and the text sit side by side,
+   and every second row swaps sides. */
+.feature-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.feature-list > article {
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.feature-list > article:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.feature-list .photo {
+    flex: 0 0 46%;
+    width: 46%;
+    height: auto;
+    min-height: 260px;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+.feature-list .card-body {
+    justify-content: center;
+    padding: 1.75rem 2rem;
+}
+
+.feature-list .card-body .more {
+    margin-top: 0.5rem;
+}
+
+
+/* ---------- 10. IMAGES ----------
+   object-fit crops every photo neatly to its box (Mozilla, n.d.g).
+   aspect-ratio keeps the card photos the same shape (Mozilla, n.d.b). */
+.photo {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    background: var(--surface-2);
+}
+
+.card-grid .photo {
+    aspect-ratio: 4 / 3;
+}
+
+figure {
+    margin: 0 0 1rem;
+}
+
+figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+
+/* ---------- 11. DETAIL PAGES (one package or experience) ----------
+   Text on the left, a photo on the right (Mozilla, n.d.d). */
+.detail {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.detail-media {
+    position: sticky;
+    top: 130px;
+    margin: 0;
+}
+
+.detail-media .photo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+}
+
+.badge {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 1rem;
+    border: 1px solid var(--cyan);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+}
+
+.detail .price {
+    font-size: 2.2rem;
+}
+
+.detail h2 {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+}
+
+/* the list of what is included, with cyan ticks */
+.checklist {
+    padding: 0;
+    list-style: none;
+}
+
+.checklist li {
+    position: relative;
+    margin-bottom: 0;
+    padding: 0.75rem 0 0.75rem 2rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.checklist li::before {
+    content: "\2713";
+    position: absolute;
+    left: 0.2rem;
+    color: var(--cyan);
+    font-weight: 700;
+}
+
+
+/* ---------- 12. HOME PAGE EXTRAS ---------- */
+
+/* the booking discount strip: four steps side by side */
+.discount-strip {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.tiers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    padding: 0;
+    list-style: none;
+}
+
+.tiers li {
+    margin: 0;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    background: var(--surface-2);
+    border-radius: 12px;
+}
+
+.tiers strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--white);
+}
+
+.tiers span {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+/* the "events we host" strip */
+.host-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+}
+
+.host-strip h2 {
+    margin: 0 1rem 0 0;
+    font-size: 1.5rem;
+}
+
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+}
+
+.pills li {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+/* the closing call to action */
+.closing {
+    text-align: center;
+}
+
+.closing p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.closing .cta {
+    justify-content: center;
+}
+
+
+/* ---------- 13. ABOUT PAGE ---------- */
+.about-intro {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.about-intro .photo {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.two-col .panel h2 {
+    font-size: 1.5rem;
+}
+
+.goals {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: goal;
+}
+
+.goals li {
+    counter-increment: goal;
+    margin: 0;
+    padding: 1.25rem 0 0;
+    border-top: 2px solid var(--pink);
+}
+
+.goals li::before {
+    content: "0" counter(goal);
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--cyan);
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.gallery figure {
+    margin: 0;
+}
+
+.gallery .photo {
+    height: 100%;
+    min-height: 240px;
+    border-radius: 12px;
+}
+
+
+/* ---------- 14. REVIEWS AND FAQ ---------- */
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.review {
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.stars {
+    margin-bottom: 0.5rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+}
+
+.review blockquote {
+    margin: 0 0 1rem;
+    font-style: italic;
+}
+
+.who {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.who small {
+    display: block;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--purple);
+}
+
+.sample-note {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+/* FAQ: each question is a <details> element that opens to show the answer (Mozilla, n.d.i) */
+.faq-list {
+    border-top: 1px solid var(--line);
+}
+
+.faq-list details {
+    border-bottom: 1px solid var(--line);
+}
+
+.faq-list summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 56px;
+    padding: 0.75rem 0;
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.faq-list summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-list summary::after {
+    content: "+";
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--cyan);
+    transition: transform 0.25s ease;
+}
+
+.faq-list details[open] summary::after {
+    transform: rotate(45deg);   /* the plus turns into a cross (Mozilla, n.d.j) */
+}
+
+.faq-list details p {
+    padding-bottom: 1rem;
+    margin: 0;
+}
+
+
+/* ---------- 15. TABLES ---------- */
+table {
+    width: 100%;
+    margin: 1rem 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+caption {
+    caption-side: top;
+    text-align: left;
+    padding: 0 0 0.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    color: var(--white);
+    background: var(--purple);
+}
+
+td {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--line);
+}
+
+tbody th {
+    background: var(--surface-2);
+}
+
+tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);   /* striped rows: :nth-child (IIE, 2026) */
+}
+
+tbody tr:hover {
+    background: rgba(98, 215, 226, 0.08);
+}
+
+tr.selected {
+    background: rgba(215, 122, 199, 0.18);
+}
+
+
+/* ---------- 16. FORMS ---------- */
+fieldset {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+legend {
+    padding: 0 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+label {
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    max-width: 540px;
+    min-height: 46px;
+    margin-top: 0.25rem;
+    padding: 0.5rem 1rem;
+    font: inherit;
+    color: var(--white);
+    background: var(--ink);
+    border: 1.5px solid rgba(255, 255, 255, 0.28);
+    border-radius: 10px;
+    transition: border-color 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(98, 215, 226, 0.25);
+}
+
+/* checkboxes and radio buttons use the logo pink (Mozilla, n.d.a) */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-right: 0.5rem;
+    accent-color: var(--pink);
+    cursor: pointer;
+}
+
+/* validation colours. The class .touched is added by javascript/main.js after the user has visited a field. */
+.touched.invalid {
+    border-color: #ff7a93;
+    box-shadow: 0 0 0 3px rgba(255, 122, 147, 0.22);
+}
+
+.touched.valid {
+    border-color: #5be39a;
+}
+
+.field-error {
+    display: block;
+    min-height: 1.3em;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    color: #ff9db0;
+}
+
+.form-message {
+    display: none;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid #ff7a93;
+    border-radius: 8px;
+    background: rgba(255, 122, 147, 0.12);
+    color: #ffc2cd;
+}
+
+.form-message.show {
+    display: block;
+}
+
+/* the live quote on the Calculate Fees page */
+.quote-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.quote-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+iframe {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 340px;
+    margin: 1rem 0;
+    border: 0;
+    border-radius: 12px;
+}
+
+
+/* ---------- 17. REVEAL ON SCROLL ----------
+   Content fades in gently as it scrolls into view. The .js class is added by javascript/main.js,
+   so the page still shows normally if JavaScript is off. */
+.js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.js .reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+
+/* ---------- 18. FOOTER ----------
+   A four-column grid (Mozilla, n.d.d). Each heading and list is placed in its column by number. */
+body > footer {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.3fr;
+    column-gap: 2rem;
+    margin-top: 3rem;
+    padding: 2.5rem 2rem 1.5rem;
+    background: #060309;
+    border-top: 1px solid var(--line);
+}
+
+body > footer > p:first-child {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+
+body > footer h2 {
+    grid-row: 1;
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: var(--white);
+}
+
+body > footer h2::before {
+    display: none;
+}
+
+body > footer ul {
+    grid-row: 2;
+    list-style: none;
+    padding-left: 0;
+}
+
+body > footer li {
+    margin: 0;
+}
+
+body > footer h2:nth-of-type(1), body > footer ul:nth-of-type(1) { grid-column: 2; }
+body > footer h2:nth-of-type(2), body > footer ul:nth-of-type(2) { grid-column: 3; }
+body > footer h2:nth-of-type(3), body > footer ul:nth-of-type(3) { grid-column: 4; }
+
+body > footer a {
+    display: inline-block;
+    padding: 0.25rem 0;
+    color: var(--muted);
+    text-decoration: none;
+}
+
+body > footer a:hover {
+    color: var(--cyan);
+}
+
+body > footer > p:last-child {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin: 1.5rem 0 0;
+    padding-top: 1rem;
+    max-width: none;
+    border-top: 1px solid var(--line);
+    text-align: center;
+}
+
+
+/* ---------- 19. RESPONSIVE DESIGN ----------
+   Media queries change the layout on smaller screens (IIE, 2026).
+   Each size is arranged on purpose: laptop (default), tablet (up to 1000px) and phone (up to 700px)
+   (W3Schools, 2023; contributed by ST10538810). */
+
+/* tablet */
+@media only screen and (max-width: 1000px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid.cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .detail,
+    .about-intro,
+    .discount-strip {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .detail-media {
+        position: static;
+    }
+
+    .detail-media .photo {
+        aspect-ratio: 16 / 10;
+    }
+
+    .goals {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-logo {
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 340px;
+    }
+
+    /* the menu becomes a button that opens a list */
+    body > header {
+        flex-wrap: wrap;
+        padding: 0.5rem 1.25rem;
+    }
+
+    body > header img {
+        height: 48px;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+    }
+
+    body > header nav {
+        display: none;
+        flex-basis: 100%;
+        padding-bottom: 0.75rem;
+    }
+
+    body > header nav.open {
+        display: block;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    nav > ul > li::after {
+        display: none;
+    }
+
+    nav a,
+    nav summary {
+        padding: 1rem 1rem;
+        border-radius: 10px;
+    }
+
+    nav details > ul {
+        position: static;
+        margin: 0 0 0.5rem 1rem;
+        box-shadow: none;
+        background: transparent;
+        border: 0;
+        border-left: 2px solid var(--line);
+        border-radius: 0;
+    }
+
+    body > footer {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 1rem;
+    }
+
+    body > footer > p:first-child,
+    body > footer > p:last-child {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+    }
+
+    body > footer h2,
+    body > footer ul {
+        grid-row: auto !important;
+        grid-column: auto !important;
+    }
+}
+
+/* phone */
+@media only screen and (max-width: 700px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.7rem; }
+
+    main {
+        padding: 1.5rem 1rem 3rem;
+    }
+
+    main > section {
+        margin: 2.5rem 0;
+    }
+
+    /* on a phone the photo sits on top and the text sits underneath, so nothing covers the logo in the photo */
+    .hero-banner {
+        display: block;
+        min-height: 0;
+    }
+
+    .hero-image {
+        position: relative;
+        height: 300px;
+        object-position: 86% 50%;
+    }
+
+    .hero-banner::before {
+        height: 300px;
+        background: linear-gradient(0deg, var(--ink) 0%, transparent 40%);
+    }
+
+    .hero-logo {
+        top: 1rem;
+        right: 1rem;
+        width: 200px;
+        max-width: 55%;
+    }
+
+    .hero-content {
+        padding: 0.5rem 1rem 2rem;
+    }
+
+    .hero-content .lead {
+        max-width: none;
+    }
+
+    .card-grid,
+    .card-grid.cols-3,
+    .review-grid,
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-list > article,
+    .feature-list > article:nth-child(even) {
+        flex-direction: column;
+    }
+
+    .feature-list .photo {
+        flex: none;
+        width: 100%;
+        min-height: 0;
+        aspect-ratio: 16 / 10;
+    }
+
+    .feature-list .card-body {
+        padding: 1.25rem;
+    }
+
+    .tiers {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery .photo {
+        min-height: 0;
+        aspect-ratio: 16 / 10;
+    }
+
+    .cta .btn,
+    .cta button {
+        flex: 1 1 100%;
+    }
+
+    /* standalone links get a 44px touch area so they are easy to tap (World Wide Web Consortium, 2023, criterion 2.5.8; Apple, n.d.; contributed by ST10538810) */
+    .more,
+    article h3 a,
+    main > p:first-child a,
+    body > footer a,
+    .faq-list summary {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+
+    .faq-list summary {
+        display: flex;
+    }
+
+    .panel,
+    fieldset {
+        padding: 1rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select,
+    textarea {
+        max-width: 100%;
+    }
+
+    /* tables become easy-to-scroll blocks, and the booking list becomes a stacked list that fits a phone */
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    form table,
+    form tbody {
+        display: block;
+        overflow: visible;
+    }
+
+    form thead {
+        display: none;
+    }
+
+    form caption {
+        display: block;
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+    }
+
+    form tbody tr {
+        display: grid;
+        grid-template-columns: 2.4rem 1fr auto;
+        grid-template-areas: "tick name fee" "tick type fee";
+        align-items: center;
+        padding: 0.75rem 0.5rem;
+        border-top: 1px solid var(--line);
+    }
+
+    form tbody td {
+        display: block;
+        padding: 0;
+        border: 0;
+    }
+
+    form tbody td:nth-child(1) { grid-area: tick; }
+    form tbody td:nth-child(2) { grid-area: name; font-weight: 600; }
+    form tbody td:nth-child(3) { grid-area: type; font-size: 0.875rem; color: var(--muted); }
+    form tbody td:nth-child(4) { grid-area: fee; color: var(--gold); font-weight: 600; }
+
+    body > footer {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.25rem 1.25rem;
+    }
+}
+
+
+/* ---------- 20. ACCESSIBILITY: REDUCED MOTION ----------
+   People who set their device to "reduce motion" get a calm version without movement (Mozilla, n.d.h). */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .js .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+/* ==========================================================================
+   Referencing (Harvard Anglia style)
+
+   Apple (n.d.) Human Interface Guidelines. Available at: https://developer.apple.com/design/human-interface-guidelines/ (Accessed: 4 November 2026). Source contributed by ST10538810.
+   Google (n.d.) Material Design 3. Available at: https://m3.material.io/ (Accessed: 4 November 2026). Source contributed by ST10538810.
+   Google Fonts (n.d.a) Orbitron. Available at: https://fonts.google.com/specimen/Orbitron (Accessed: 6 November 2026).
+   Google Fonts (n.d.b) Rajdhani. Available at: https://fonts.google.com/specimen/Rajdhani (Accessed: 6 November 2026).
+   Google Fonts (n.d.c) Poppins. Available at: https://fonts.google.com/specimen/Poppins (Accessed: 6 November 2026).
+   The Independent Institute of Education (IIE) (2026) Web Development (Introduction) WEDE5020 Module Manual, Learning Unit 4: CSS. Johannesburg: IIE.
+   Mozilla (n.d.a) accent-color - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/accent-color (Accessed: 6 November 2026).
+   Mozilla (n.d.b) aspect-ratio - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio (Accessed: 6 November 2026).
+   Mozilla (n.d.c) Basic concepts of flexbox - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox (Accessed: 6 November 2026).
+   Mozilla (n.d.d) Basic concepts of grid layout - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout/Basic_concepts_of_grid_layout (Accessed: 6 November 2026).
+   Mozilla (n.d.e) filter - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/filter (Accessed: 6 November 2026).
+   Mozilla (n.d.f) :focus-visible - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible (Accessed: 6 November 2026).
+   Mozilla (n.d.g) object-fit - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit (Accessed: 6 November 2026).
+   Mozilla (n.d.h) prefers-reduced-motion - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion (Accessed: 6 November 2026).
+   Mozilla (n.d.i) The Details disclosure element - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details (Accessed: 6 November 2026).
+   Mozilla (n.d.j) transform - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/transform (Accessed: 6 November 2026).
+   Mozilla (n.d.k) Using CSS transitions - MDN Web Docs. Available at: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transitions/Using_CSS_transitions (Accessed: 6 November 2026).
+   Nielsen, J. (2024) 10 usability heuristics for user interface design. Nielsen Norman Group. Available at: https://www.nngroup.com/articles/ten-usability-heuristics/ (Accessed: 4 November 2026). Source contributed by ST10538810.
+   W3Schools (2023) HTML responsive web design. Available at: https://www.w3schools.com/html/html_responsive.asp (Accessed: 4 November 2026). Source contributed by ST10538810.
+   World Wide Web Consortium (2023) Web Content Accessibility Guidelines (WCAG) 2.2. Available at: https://www.w3.org/TR/WCAG22/ (Accessed: 4 November 2026). Source contributed by ST10538810.
+   ========================================================================== */
